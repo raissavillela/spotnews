@@ -6,29 +6,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Página Inicial</title>
-</head>
-
-<body>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  
+  <body>
     <header class="header">
-        <nav>
-            <ul class="header-links">
-                <li><a href="{% url 'home-page' %}">Home</a></li>
-            </ul>
-        </nav>
+      <ul class="header-links">
+        <li><a href="{% url 'home-page' %}">Home</a></li>
+      </ul>
     </header>
-
-    <main class="news-container">
-        {% for news in news_list %}
-            <section class="news-card">
-                {% if news.image %}
-                <img src="{% static news.image.url %}" alt="Imagem da notícia">
-            {% endif %}
-                <h2 class="news-title">{{ news.title }}</h2>
-                <span class="news-date">{{ news.created_at|date:"d/m/Y" }}</span>
-            </section>
-        {% endfor %}
-        </main>
-</body>
+  
+    <h1>Página Inicial</h1>
+  
+    <div class="news-container">
+      {% for news in news_list %}
+      <div class="news-card">
+        <h2 class="news-title">{{ news.title }}</h2>
+        <span class="news-date">{{ news.created_at|date:"d/m/Y" }}</span>
+        {% if news.image %}
+        <img src="{% static news.image.url %}" alt="{{ news.title }}">
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
 </html>
