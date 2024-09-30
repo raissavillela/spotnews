@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, User
+from .models import Category, User, News
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -13,3 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'name', 'email', 'role']
         extra_kwargs = {'password': {'write_only': True}}
+
+
+class NewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = News
+        fields = "__all__"

@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from news.serializers import CategorySerializer, UserSerializer
+from news.serializers import CategorySerializer, UserSerializer, NewsSerializer
 from .models import Category, News, User
 from .forms import CategoryForm, NewsForm
 from rest_framework import viewsets
@@ -27,7 +27,7 @@ def category_form(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home-page')  # Redireciona para a página inicial
+            return redirect('home-page')
     else:
         form = CategoryForm()
 
@@ -64,6 +64,22 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class NewsViewSet(viewsets.ModelViewSet):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
