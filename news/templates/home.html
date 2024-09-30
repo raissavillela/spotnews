@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  </head>
+</head>
   
 <body>
     <header class="header">
@@ -20,15 +20,15 @@
     <h1>Página Inicial</h1>
   
     <div class="news-container">
-      {% for news in news_list %}
-      <div class="news-card">
-        <h2 class="news-title">{{ news.title }}</h2>
-        <span class="news-date">{{ news.created_at|date:"d/m/Y" }}</span>
-        {% if news.image %}
-        <img src="{% static news.image.url %}" alt="{{ news.title }}">
-        {% endif %}
-      </div>
-      {% endfor %}
+        {% for news in news_list %}
+            <div class="news-card">
+                {% if news.image %}
+                <img src="{% static news.image.url %}" alt="Imagem da notícia">
+                {% endif %}
+                <h2 class="news-title">{{ news.title }}</h2>
+                <span class="news-date">{{ news.created_at|date:"d/m/Y" }}</span>
+            </div>
+        {% endfor %}
     </div>
 </body>
 </html>
